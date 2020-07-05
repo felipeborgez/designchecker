@@ -160,7 +160,7 @@ class ReflectionTest {
 	}
 	
 	@Test
-	void testAmountoOfConstructors() {
+	void testAmountOfConstructors() {
 		try {
 			Class<?> c = Class.forName("br.ufba.examples.TheMotherClass");			
 			assertEquals(1, c.getConstructors().length); 

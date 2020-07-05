@@ -1,8 +1,38 @@
 package br.ufba.dc;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.lang.Package;
+import java.lang.annotation.Annotation;
+import java.net.URL;
+import java.net.URLDecoder;
 
 public class DC {
+	
+	
+//	public static Package[] getPackage() {
+//	    return Package.getPackages();
+//	    		.stream()
+//	        .map(Package::getName)
+//	        .filter(n -> n.startsWith(prefix));
+//	        .collect(toList());
+//	}
+	
+//	public static String getPath() throws UnsupportedEncodingException {
+//
+//	    String path = Class.getClass().getClassLoader().getResource("").getPath();
+//	    String fullPath = URLDecoder.decode(path, "UTF-8");
+//	    String pathArr[] = fullPath.split("/WEB-INF/classes/");
+//	    System.out.println(fullPath);
+//	    System.out.println(pathArr[0]);
+//	    fullPath = pathArr[0];
+//
+//	    return fullPath;
+//	}
 	
 	public static boolean classExists(String className) {
 	    try  {

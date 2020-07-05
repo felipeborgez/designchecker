@@ -59,7 +59,7 @@ class DCTest {
 		assertTrue(c.hasAttributes(attributesList));
 		
 		attributesList.add("Atributoerrado");
-		assertFalse(DC.classExists(attributesList));
+		assertFalse(c.hasAttributes(attributesList));
 		
 	}
 	
@@ -91,7 +91,7 @@ class DCTest {
 	}
 
 	@Test
-	void testAmountoOfConstructors() {		
+	void testAmountOfConstructors() {		
 		assertEquals(1, DC.getClass("br.ufba.examples.TheMotherClass").getContructors().size());
 		assertEquals(2, DC.getClass("br.ufba.examples.TheClass").getContructors().size());
 	}
