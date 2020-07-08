@@ -16,5 +16,22 @@ public class TheClass extends TheMotherClass{
 		System.out.println("Just for test with params");
 	}
 	
+	public void theMethod() {
+		
+	}
+	
+	private void privateMethod() {
+		
+	}
+
+	
+	protected void protectedMethod() {
+		
+	}
+	
+	final public void finalMethod() {
+		
+	}
+	
 
 }

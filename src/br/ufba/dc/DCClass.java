@@ -1,5 +1,6 @@
 package br.ufba.dc;
 
+import java.lang.reflect.Method;
 import java.awt.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -15,6 +16,7 @@ public class DCClass {
 	
 	private Class<?> c;
 	protected ArrayList<Attribute> attributes;
+	protected ArrayList<DCMethod> methods;
 	protected ArrayList<DCConstructor> constructors;
 	
 	
@@ -22,9 +24,14 @@ public class DCClass {
 		this.superClassName = c.getSuperclass().getName();
 		this.c = c;
 		this.loadAttributes();
+		this.loadMethods();
 		this.loadConstructors();
 		
-	}		
+	}
+	
+	public boolean isAbstract() {
+		return Modifier.isAbstract( this.c.getModifiers() );
+	}
 	
 	public boolean extendsFrom(String superClassName) {
 		return this.superClassName == superClassName;
@@ -66,6 +73,29 @@ public class DCClass {
 	
 	public ArrayList<Attribute> getAttributes(){
 		return this.attributes;		
+	}
+	
+	private void loadMethods(){
+		ArrayList<DCMethod> myMethod = new ArrayList<DCMethod>();		
+		Method[] methods = this.c.getDeclaredMethods();
+		for (Method m : methods) {
+			if (m.getName() != "$jacocoInit") {
+				DCMethod method = new DCMethod(m);
+				myMethod.add(method);
+			}
+		}
+		this.methods = myMethod;
+	
+	}
+	
+	public DCMethod getMethod(String name) {
+		for (DCMethod m : this.methods) {
+			if (m.getName() == name) {
+				return m;
+			}
+		}
+		System.out.println("Method " + name + " not found at " + c.getName() + " \n");
+		return null;
 	}
 	
 	private void loadConstructors(){

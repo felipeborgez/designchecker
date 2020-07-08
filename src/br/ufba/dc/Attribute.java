@@ -10,8 +10,7 @@ public class Attribute {
 	
 	public Attribute (Field field) {
 		this.name = field.getName();
-		this.field = field;
-		
+		this.field = field;	
 	}
 	
 	public String getName() {
