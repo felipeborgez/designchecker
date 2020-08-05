@@ -2,17 +2,10 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-
-import br.ufba.dc.Attribute;
-import br.ufba.dc.DC;
-import br.ufba.dc.DCMethod;
-import br.ufba.examples.*;
 
 class ReflectionMethodTest {
 	

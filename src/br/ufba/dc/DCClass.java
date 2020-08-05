@@ -1,16 +1,14 @@
 package br.ufba.dc;
 
 import java.lang.reflect.Method;
-import java.awt.List;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
 public class DCClass {
 	
-//	private String name;
+	private String name;
 	private String superClassName;
 //	private DCClass superClass;
 	
@@ -18,19 +16,56 @@ public class DCClass {
 	protected ArrayList<Attribute> attributes;
 	protected ArrayList<DCMethod> methods;
 	protected ArrayList<DCConstructor> constructors;
+	protected ArrayList<DCInterface> interfaces;
 	
 	
 	public DCClass(Class<?> c) {
-		this.superClassName = c.getSuperclass().getName();
 		this.c = c;
+		this.name = c.getName();
+		this.superClassName = c.getSuperclass().getName();
+		
 		this.loadAttributes();
 		this.loadMethods();
 		this.loadConstructors();
+		this.loadInterfaces();
 		
+		
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public boolean isInterface() {
+		return Modifier.isInterface(this.c.getModifiers() );
+	}
+	
+	public boolean isEnum() {
+		return this.c.isEnum();
 	}
 	
 	public boolean isAbstract() {
 		return Modifier.isAbstract( this.c.getModifiers() );
+	}
+	
+	public boolean isFinal() {
+		return Modifier.isFinal(this.c.getModifiers());
+	}
+	
+	public boolean isStatic() {
+		return Modifier.isStatic(this.c.getModifiers());
+	}
+	
+	public boolean isPublic() {
+		return Modifier.isPublic(this.c.getModifiers());
+	}
+	
+	public boolean isPrivate() {
+		return Modifier.isPrivate(this.c.getModifiers());
+	}
+	
+	public boolean isProtected() {
+		return Modifier.isProtected(this.c.getModifiers());
 	}
 	
 	public boolean extendsFrom(String superClassName) {
@@ -88,20 +123,24 @@ public class DCClass {
 	
 	}
 	
+	public ArrayList<DCMethod> getMethods() {
+		return this.methods;
+	}
+	
 	public DCMethod getMethod(String name) {
 		for (DCMethod m : this.methods) {
 			if (m.getName() == name) {
 				return m;
 			}
 		}
-		System.out.println("Method " + name + " not found at " + c.getName() + " \n");
+		System.out.println("Method \"" + name + "\" not found at " + c.getName() + " \n");
 		return null;
 	}
 	
 	private void loadConstructors(){
 		ArrayList<DCConstructor> myConstructors = new ArrayList<DCConstructor>();		
-		Constructor[] constructors = this.c.getConstructors();
-		for (Constructor c : constructors) {			
+		Constructor<?>[] constructors = this.c.getConstructors();
+		for (Constructor<?> c : constructors) {			
 			myConstructors.add(new DCConstructor(c));
 		}
 		this.constructors = myConstructors;
@@ -109,5 +148,31 @@ public class DCClass {
 	
 	public ArrayList<DCConstructor> getContructors(){
 		return this.constructors;
+	}
+	
+	private void loadInterfaces(){
+		ArrayList<DCInterface> myInterfaces = new ArrayList<DCInterface>();		
+		Class<?>[] interfaces = this.c.getInterfaces();
+		for (Class<?> i : interfaces) {
+//			System.out.println(i.getName());
+			myInterfaces.add(new DCInterface(i));
+		}
+		this.interfaces = myInterfaces;
+	}
+	
+	public ArrayList<DCInterface> getInterfaces(){
+		return this.interfaces;
+	}
+	
+	public DCInterface getInterface(String name) {
+		System.out.println(this.interfaces.toString());
+		for (DCInterface i : this.interfaces) {
+			System.out.println("Comparing: " + name + " and " + i.getName());
+			if (i.getName() == name) {
+				return i;
+			}
+		}
+		System.out.println("Interface \"" + name + "\" not found at " +this.getName() + " \n");
+		return null;
 	}
 }

@@ -1,15 +1,6 @@
 package br.ufba.dc;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.Package;
-import java.lang.annotation.Annotation;
-import java.net.URL;
-import java.net.URLDecoder;
 
 public class DC {
 	
@@ -52,6 +43,16 @@ public class DC {
 	}
 	
 	public static DCClass getClass(String name) {
+		try {			
+			Class<?> c = Class.forName(name);
+			DCClass dcclass = new DCClass(c);						
+			return dcclass;	
+		}  catch (ClassNotFoundException e) {
+			return null;
+		}		
+	}
+	
+	public static DCClass getInterface(String name) {
 		try {			
 			Class<?> c = Class.forName(name);
 			DCClass dcclass = new DCClass(c);						

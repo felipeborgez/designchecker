@@ -17,12 +17,20 @@ public class DCMethod {
 		return this.name;
 	}
 	
+	public Class<?> getReturnType() {
+		return this.method.getReturnType();
+	}
+	
 	public boolean isAbstract() {
 		return Modifier.isAbstract(this.method.getModifiers());
 	}
 	
 	public boolean isFinal() {
 		return Modifier.isFinal(this.method.getModifiers());
+	}
+	
+	public boolean isStatic() {
+		return Modifier.isStatic(this.method.getModifiers());
 	}
 	
 	public boolean isPublic() {
@@ -36,5 +44,4 @@ public class DCMethod {
 	public boolean isProtected() {
 		return Modifier.isProtected(this.method.getModifiers());
 	}
-
 }

@@ -1,6 +1,6 @@
 package br.ufba.examples;
 
-public class TheClass extends TheMotherClass{
+public class TheClass extends TheMotherClass implements InterfaceA {
 	
 	private String privateString;
 	private int privateInt;
@@ -30,6 +30,12 @@ public class TheClass extends TheMotherClass{
 	}
 	
 	final public void finalMethod() {
+		
+	}
+
+	@Override
+	public void simpleMethod() {
+		
 		
 	}
 	
