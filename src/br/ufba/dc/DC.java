@@ -1,29 +1,44 @@
 package br.ufba.dc;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-public class DC {
-	
-	
-//	public static Package[] getPackage() {
-//	    return Package.getPackages();
-//	    		.stream()
-//	        .map(Package::getName)
-//	        .filter(n -> n.startsWith(prefix));
-//	        .collect(toList());
-//	}
-	
-//	public static String getPath() throws UnsupportedEncodingException {
-//
-//	    String path = Class.getClass().getClassLoader().getResource("").getPath();
-//	    String fullPath = URLDecoder.decode(path, "UTF-8");
-//	    String pathArr[] = fullPath.split("/WEB-INF/classes/");
-//	    System.out.println(fullPath);
-//	    System.out.println(pathArr[0]);
-//	    fullPath = pathArr[0];
-//
-//	    return fullPath;
-//	}
+public class DC {    
+    
+    private static Set<DCPackage> getPackages(String folder, Set<DCPackage> pack) {
+        File dir = new File(folder);
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
+            	String path = file.getPath();
+            	String packName = path
+			            			.substring(path.indexOf("src") + 4)
+			            			.replace(File.separator, ".");
+            	pack.add(new DCPackage(packName));
+            	getPackages(file.getAbsolutePath(), pack);
+            }
+        }
+        return pack;
+    }
+    
+    public static Set<DCPackage> getPackages() {
+    	Set<DCPackage> packs = new HashSet<>();
+    	getPackages("src", packs);
+    	return packs;
+    }
+    
+    public static DCPackage getPackage(String name) {
+    	Set<DCPackage> packs = DC.getPackages();
+    	for (DCPackage p : packs) {
+			if (p.getCanonicalName().equals(name)) {
+				return p;
+			}
+		}
+    	return null;
+    	
+    }
 	
 	public static boolean classExists(String className) {
 	    try  {

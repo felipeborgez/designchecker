@@ -51,7 +51,9 @@ class ReflectionClassTest {
 		} catch (SecurityException e) {
 			
 		}
-	}@Test 
+	}
+	
+	@Test 
 	void testIfClassExists() {
 		try {
 			Class<?> c = Class.forName("br.ufba.examples.TheClass");			

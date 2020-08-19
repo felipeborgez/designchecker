@@ -9,10 +9,13 @@ import java.util.ArrayList;
 public class DCClass {
 	
 	private String name;
+	private String CanonicalName;
 	private String superClassName;
 //	private DCClass superClass;
 	
+		
 	private Class<?> c;
+	private DCPackage packageDC;
 	protected ArrayList<Attribute> attributes;
 	protected ArrayList<DCMethod> methods;
 	protected ArrayList<DCConstructor> constructors;
@@ -21,15 +24,17 @@ public class DCClass {
 	
 	public DCClass(Class<?> c) {
 		this.c = c;
-		this.name = c.getName();
+		this.CanonicalName = c.getName();
+		String[] packages = this.CanonicalName.split("\\.");
+		this.name = packages[packages.length - 1];
+		
 		this.superClassName = c.getSuperclass().getName();
 		
+		this.loadPackage();
 		this.loadAttributes();
 		this.loadMethods();
 		this.loadConstructors();
 		this.loadInterfaces();
-		
-		
 	}
 	
 	public String getName() {
@@ -70,6 +75,11 @@ public class DCClass {
 	
 	public boolean extendsFrom(String superClassName) {
 		return this.superClassName == superClassName;
+	}
+	
+	public void loadPackage() {
+		Package pack = c.getPackage();
+		this.packageDC = new DCPackage(pack);
 	}
 	
 	public boolean hasAttribute(String name) {
@@ -154,10 +164,13 @@ public class DCClass {
 		ArrayList<DCInterface> myInterfaces = new ArrayList<DCInterface>();		
 		Class<?>[] interfaces = this.c.getInterfaces();
 		for (Class<?> i : interfaces) {
-//			System.out.println(i.getName());
 			myInterfaces.add(new DCInterface(i));
 		}
 		this.interfaces = myInterfaces;
+	}
+	
+	public boolean implement(String name) {
+		return (this.getInterface(name) != null);
 	}
 	
 	public ArrayList<DCInterface> getInterfaces(){
@@ -165,14 +178,16 @@ public class DCClass {
 	}
 	
 	public DCInterface getInterface(String name) {
-		System.out.println(this.interfaces.toString());
-		for (DCInterface i : this.interfaces) {
-			System.out.println("Comparing: " + name + " and " + i.getName());
-			if (i.getName() == name) {
+		if (!name.contains(".")) {
+			name = this.packageDC.getCanonicalName() + "." + name;
+		}
+		
+		for (DCInterface i : this.getInterfaces()) {
+			if (name.equals(i.getName())) {
 				return i;
 			}
 		}
-		System.out.println("Interface \"" + name + "\" not found at " +this.getName() + " \n");
 		return null;
 	}
 }
+

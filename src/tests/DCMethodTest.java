@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-
 import br.ufba.dc.DC;
 import br.ufba.dc.DCClass;
 

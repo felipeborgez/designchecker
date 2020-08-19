@@ -1,7 +1,5 @@
 package tests;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,11 +21,14 @@ class DCClassTest {
 	
 	@Test 
 	void testIfClassImplementsInterface() {
-		DCInterface interB = DC.getClass("br.ufba.examples.TheClass").getInterface("br.ufba.examples.InterfaceB");
-		assertNull(interB);
+		DCClass c = DC.getClass("br.ufba.examples.TheClass");
 		
-		DCInterface interA = DC.getClass("br.ufba.examples.TheClass").getInterface("br.ufba.examples.InterfaceA");
-		assertEquals("br.ufba.examples.InterfaceA", interA.getName());
+		assertFalse(c.implement("br.ufba.examples.InterfaceB"));
+		assertTrue(c.implement("br.ufba.examples.InterfaceA"));
+		
+		// Test using the simples(short) name
+		assertFalse(c.implement("InterfaceB"));
+		assertTrue(c.implement("InterfaceA"));
 	}
 	
 	@Test 
