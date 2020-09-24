@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import br.ufba.dc.Attribute;
+import br.ufba.dc.DCAttribute;
 import br.ufba.dc.DC;
 import br.ufba.dc.DCClass;
 import br.ufba.dc.DCPackage;
@@ -38,8 +38,8 @@ class DCTest {
 	
 	@Test
 	void testAttributeVisibility() {		
-		ArrayList<Attribute> attributes = DC.getClass("br.ufba.examples.TheClassPrivateAttributes").getAttributes();
-		for (Attribute attr : attributes) {
+		ArrayList<DCAttribute> attributes = DC.getClass("br.ufba.examples.TheClassPrivateAttributes").getAttributes();
+		for (DCAttribute attr : attributes) {
 			assertTrue(attr.isPrivate());
 		}
 	}
@@ -91,14 +91,10 @@ class DCTest {
 	
 	@Test
 	void testPackagesBrowsing() {
-		
-		DCPackage p = DC.getPackage("br")
-						.getPackage("example")
-						.getPackage("ufba");		
-		
 		String pName = "br.example";
-		p = DC.getPackage(pName);
+		DCPackage p = DC.getPackage(pName);
 		assertNull(p);
+		
 		
 		p = DC.getPackage("br")
 				.getPackage("ufba");		
@@ -106,5 +102,29 @@ class DCTest {
 		pName = "br.ufba";
 		p = DC.getPackage(pName);
 		assertEquals(pName, p.getCanonicalName());
+		
+		try {
+			p = DC.getPackage("br")
+					.getPackage("example")
+					.getPackage("ufba");
+			assertNull(p);
+			System.out.println(p.getName());
+			System.out.println(p.getCanonicalName());
+//			p = ;
+//			assertNull(p);
+		} catch (NullPointerException e) {
+			assertNull(p);
+			System.out.println(p.toString()); 
+			
+		}
 	}
+		
+	@Test
+	void testGetClassFromPackage() {
+		DCPackage p = DC.getPackage("br.ufba.examples");
+		String className = p.getClass("TheClass").getCanonicalName();
+		assertEquals("br.ufba.examples.TheClass", className);
+	}
+		
+	
 }

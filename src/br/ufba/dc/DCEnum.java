@@ -5,13 +5,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
-public class DCInterface {
+public class DCEnum {
 	
 	Class<?> c;
 	String name;
 	protected ArrayList<DCMethod> methods;
 	
-	public DCInterface(Class<?> c) {
+	public DCEnum(Class<?> c) {
 		this.c = c;
 		this.name = c.getName();
 		this.loadMethods();
@@ -37,10 +37,7 @@ public class DCInterface {
 	
 	public DCMethod getMethod(String name) {
 		for (DCMethod m : this.methods) {
-			System.out.println("--------------");
-			System.out.println(m.getName());
-			System.out.println(name);
-			if (m.getName().equals(name)) {
+			if (m.getName() == name) {
 				return m;
 			}
 		}

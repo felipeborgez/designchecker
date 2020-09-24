@@ -3,12 +3,12 @@ package br.ufba.dc;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-public class Attribute {
+public class DCAttribute {
 	
 	private String name;
 	private Field field;
 	
-	public Attribute (Field field) {
+	public DCAttribute (Field field) {
 		this.name = field.getName();
 		this.field = field;	
 	}

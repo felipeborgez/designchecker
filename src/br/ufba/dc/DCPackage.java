@@ -43,5 +43,9 @@ public class DCPackage {
 		}
 		return null;
 	}
+	
+	public DCClass getClass(String name) {
+		return DC.getClass(this.getCanonicalName() +  "." +  name);
+	}
 
 }

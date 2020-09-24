@@ -9,14 +9,14 @@ import java.util.ArrayList;
 public class DCClass {
 	
 	private String name;
-	private String CanonicalName;
+	private String canonicalName;
 	private String superClassName;
 //	private DCClass superClass;
 	
 		
 	private Class<?> c;
 	private DCPackage packageDC;
-	protected ArrayList<Attribute> attributes;
+	protected ArrayList<DCAttribute> attributes;
 	protected ArrayList<DCMethod> methods;
 	protected ArrayList<DCConstructor> constructors;
 	protected ArrayList<DCInterface> interfaces;
@@ -24,8 +24,8 @@ public class DCClass {
 	
 	public DCClass(Class<?> c) {
 		this.c = c;
-		this.CanonicalName = c.getName();
-		String[] packages = this.CanonicalName.split("\\.");
+		this.canonicalName = c.getName();
+		String[] packages = this.canonicalName.split("\\.");
 		this.name = packages[packages.length - 1];
 		
 		this.superClassName = c.getSuperclass().getName();
@@ -39,6 +39,10 @@ public class DCClass {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public String getCanonicalName() {
+		return this.canonicalName;
 	}
 	
 	public boolean isInterface() {
@@ -105,18 +109,18 @@ public class DCClass {
 	}
 	
 	private void loadAttributes(){
-		ArrayList<Attribute> myAttributes = new ArrayList<Attribute>();		
+		ArrayList<DCAttribute> myAttributes = new ArrayList<DCAttribute>();		
 		Field[] fields = this.c.getDeclaredFields();
 		for (Field f : fields) {
 			if (f.getName() != "$jacocoData") {
-				Attribute attr = new Attribute(f);
+				DCAttribute attr = new DCAttribute(f);
 				myAttributes.add(attr);
 			}
 		}
 		this.attributes = myAttributes;
 	}
 	
-	public ArrayList<Attribute> getAttributes(){
+	public ArrayList<DCAttribute> getAttributes(){
 		return this.attributes;		
 	}
 	

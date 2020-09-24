@@ -1,10 +1,12 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,14 @@ class DCInterfaceTest {
 	void testInterfaceMethods() {
 		DCClass c = DC.getClass("br.ufba.examples.TheClass");
 		DCInterface inter = c.getInterface("br.ufba.examples.InterfaceA");
-		inter.getMethod("");
+		
+		DCMethod m = inter.getMethod("simpleMethod");
+		
+		assertEquals("simpleMethod", m.getName());
+		
+		m = inter.getMethod("simpleMethod");
+		assertNull(m);
+		
 	}
 
 	

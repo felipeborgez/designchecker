@@ -26,7 +26,7 @@ class DCClassTest {
 		assertFalse(c.implement("br.ufba.examples.InterfaceB"));
 		assertTrue(c.implement("br.ufba.examples.InterfaceA"));
 		
-		// Test using the simples(short) name
+		// Using the simple(short) name
 		assertFalse(c.implement("InterfaceB"));
 		assertTrue(c.implement("InterfaceA"));
 	}
