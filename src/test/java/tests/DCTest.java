@@ -1,18 +1,16 @@
 package tests;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import br.ufba.dc.DCAttribute;
 import br.ufba.dc.DC;
-import br.ufba.dc.DCClass;
+import br.ufba.dc.DCAttribute;
 import br.ufba.dc.DCPackage;
 
 class DCTest {	
